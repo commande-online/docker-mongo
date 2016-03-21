@@ -7,5 +7,9 @@ COPY ./conf /conf-DB
 
 ENTRYPOINT ["/conf-DB/entrypoint.sh"]
 
+ONBUILD RUN mongo admin /init-DB/user-admin.js
+
 EXPOSE 27017
 CMD ["mongod"]
+
+#RUN /conf-DB/add-users.sh

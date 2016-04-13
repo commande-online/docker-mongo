@@ -5,11 +5,12 @@ MAINTAINER Commande-Online.fr SAS
 COPY ./init /init-DB
 COPY ./conf /conf-DB
 
+RUN chmod +x /conf-DB/entrypoint.sh
+
 ENTRYPOINT ["/conf-DB/entrypoint.sh"]
 
-ONBUILD RUN mongo admin /init-DB/user-admin.js
+RUN more /conf-DB/entrypoint.sh
+
 
 EXPOSE 27017
 CMD ["mongod"]
-
-#RUN /conf-DB/add-users.sh

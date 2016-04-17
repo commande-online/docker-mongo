@@ -17,9 +17,6 @@ if [ "$1" = 'mongod' ]; then
     echo "## Launching mongo in WiredTiger mode with auth enabled"
 	gosu mongodb "$@" --storageEngine wiredTiger & #--auth --setParameter enableLocalhostAuthBypass=0 &
 
-	#echo "help"
-	#exec help
-
     # from https://github.com/tutumcloud/mongodb/blob/master/3.2/set_mongodb_password.sh
 	RET=1
     while [[ RET -ne 0 ]]; do
@@ -40,6 +37,11 @@ if [ "$1" = 'mongod' ]; then
 
         echo "## Creating the app user"
         mongo admin /init-DB/user-prod.js
+    fi
+
+    echo "## Importing data"
+    if [ "$(ls -A /init-data)" ]; then
+       mongorestore -d col2-prod /init-data
     fi
 
     # Shutdown of Mongo

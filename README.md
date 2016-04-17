@@ -7,5 +7,7 @@ Please update the password provided in the /init/user-[admin|prod].js files. Tho
 ## Instruction
 Simply execute the Dockerfile to build the environment
 
+If you want to automatically import data mount /init-data
+
 ## Known issues
 On windows, mounting a folder for /data/db doesn't work

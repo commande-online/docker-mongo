@@ -29,12 +29,18 @@ if [ "$1" = 'mongod' ]; then
         RET=$?
     done
 
+    USERS=`mongo --quiet --eval "db.system.users.find({user:'admin'}).count()" admin`
 
-	echo "## Creating the admin user"
-    mongo admin /init-DB/user-admin.js
+    echo "## Checking if the user admin as already been created : $USERS"
 
-    echo "## Creating the app user"
-    mongo admin /init-DB/user-prod.js
+	if [ "$USERS" -eq 0 ]
+	then
+	    echo "## Creating the admin user"
+        mongo admin /init-DB/user-admin.js
+
+        echo "## Creating the app user"
+        mongo admin /init-DB/user-prod.js
+    fi
 
     # Shutdown of Mongo
     echo "## Users have been created, we relaunch mongo to enable auth"

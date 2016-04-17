@@ -46,7 +46,7 @@ if [ "$1" = 'mongod' ]; then
     echo "## Users have been created, we relaunch mongo to enable auth"
     gosu mongodb "$@" --shutdown
 
-	exec gosu mongodb "$@" --storageEngine wiredTiger --auth --setParameter enableLocalhostAuthBypass=0
+	exec gosu mongodb "$@" --bind_ip 0.0.0.0 --storageEngine wiredTiger --auth --setParameter enableLocalhostAuthBypass=0
 
 fi
 
